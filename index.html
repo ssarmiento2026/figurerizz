@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Source+Serif+Pro&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+
+  <title>Nendoroids</title>  
+
+  <style>
+    h3{
+        font-family: 'Josefin Sans', sans-serif;
+        font-weight: bold;
+        text-align: center;
+    }
+    h5{
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+        color:black;
+        text-align: center;
+    }   
+    
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #274868;
+    }
+
+    #menu-container, #form-area {
+        padding: 40px;
+    }
+
+    #form-area{
+        padding-left: 20px;
+    }
+
+    #main-container {
+        background-color: #f8f5ef;
+        margin:auto;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    #myTopnav ul{
+        height:55px;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f2b738;
+    }
+
+    #myTopnav li{
+        float: left;
+    }
+    
+    #myTopnav li a{
+        font-size: larger;
+        font-family: 'Josefin Sans', sans-serif;
+        font-weight: bold;
+        display: block;
+        color: rgb(51, 51, 51);
+        text-align: center;
+        padding: 15px 16px;
+        text-decoration: none;
+    }
+
+    #myTopnav li a:hover{
+        background-color: #d69b1a;
+        transition: 0.5s;
+    }
+
+    @media screen and (max-width: 600px) {
+      .topnav a:not(:first-child) {display: none;}
+      .topnav a.icon {
+        float: right;
+        display: block;
+      }
+    }
+
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+      }
+    
+    .card{
+        border-style: none;
+    }
+
+    .btn {
+        background-color: #7E7F83;
+        border-style: none;
+    }
+
+    .btn:hover {
+        background-color: #4d4f58;
+        border-style: none;
+    }
+
+    .btn:active {
+        background-color: #4d4f58;
+        border-style: none;
+    }
+
+    button {
+        background-color: #274868;
+        border-style: none;
+        color: #f8f5ef;
+        border-radius: 10%;
+    }
+  </style>
+  
+  <script>
+    var cartItems = 0;
+    
+    var cart=[];
+
+    var total = 0.00;
+    
+    function addtoCart(name, price){
+      total += price;
+
+      var showTotal = total.toFixed(2);
+
+      document.querySelector("#totalPay").innerHTML = 'Total: Php ' + showTotal;
+
+      if (cartItems >= 0) {
+        document.querySelector("#empty").innerHTML = '';
+      }
+
+      document.querySelector("#foodCartItems").innerHTML += "<li class='list-group-item'>" + name + ": Php " + price + "</li>";
+
+      cart.push(
+        {
+          foodname: name,
+          foodprice: price
+        }
+      );
+
+      document.querySelector("#foodcart").value = JSON.stringify(cart);
+
+      cartItems++;
+      
+    }
+
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+     x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+    var cartItems = 0;
+    var cart=[];
+    
+    function addtoCart(name, price){
+        cart.push(
+            {
+            prod_name: name,
+            prod_price: price
+            }
+        );
+
+        cartItems++;
+
+        showCart();
+    }
+
+    function showCart (){  
+        if (cartItems == 0) {
+            document.querySelector("#totalPay").innerHTML = "Total: Php 0.00";
+            document.querySelector("#shopCartItems").innerHTML = "";
+            document.querySelector("#shopCartItems").innerHTML += "<li class='list-group-item' id='empty'></li>";
+            document.querySelector("#empty").innerHTML = "<i>There are no ordered items yet.</i>";
+        }
+
+        else {
+            totalPrice = 0;
+            document.querySelector("#shopCartItems").innerHTML = '';
+
+            for(var i=0; i < cart.length; i++){
+                document.querySelector("#shopCartItems").innerHTML += "<li>" + cart[i].prod_name + "</li>" + "<button onclick='remove("+i+")'>Remove</button>";
+            }
+
+            for(var j=0; j < cart.length; j++){
+                totalPrice += cart[j].prod_price;
+            }
+
+            document.querySelector("#totalPay").innerHTML = "Total: Php " + totalPrice;
+        }
+
+    document.querySelector("#cartOrder").value = JSON.stringify(cart);
+    }
+
+    function remove(i) {
+        cart.splice(i,1);
+
+        if (cart.length <= 0){
+            cartItems = 0;
+        }
+        showCart();
+    }
+  </script>
+</head> 
+
+  
+<body>
+    <header>
+        <div class="topnav" id="myTopnav">
+            <ul>
+                <li><a href="index.html"><img src="Erizz.png" alt="Figurerizz Logo" style="width:35px; height:35px;"></a></li>
+                <li><a href="index.html">FIGURERIZZ</a></li>
+                <li style="float:right"><a href="About_the_Company.html">About the Company</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="main-container" style="width:90%">
+        <div id="menu-container">
+            <h3>HAIKYUU!!</h3>
+            <div class="row mb-5">
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20170518/6446/45436/large/c559e2d8ab7a8661a516067ce8a03ed7.jpg" class="card-img-top" alt="Daichi - Suga Nendoroid (2-in-1)">
+                    <div class="card-body">
+                    <h5 class="card-title">Daichi - Suga Nendoroid (2-in-1)</h5>
+                    <h6 class="card-title">Price: Php 3,900</h6>
+                    <p class="card-text"> Get both Haikyuu!! characters, Sawamura Daichi and Sugawara Koushi Nendoroids! </p>
+                    <button class="btn btn-primary" id="btnDaSu" onclick="addtoCart('Daichi - Suga Nendoroids', 3900)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+        
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20200824/9958/73445/large/e0b8c8e32aa6c9cda88ec892cadeb5d1.jpg" class="card-img-top" alt="Miya Osamu Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Miya Osamu Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,100</h6>
+                    <p class="card-text">Inarizaki's wing spiker, Miya Osamu Nendoroid from Haikyuu!!</p>
+                    <button class="btn btn-primary" id="btnOsamu" onclick="addtoCart('Miya Osamu Nendoroid', 2100)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20161102/6043/42114/large/7e104b07b7960233e46171e12ac81336.jpg" class="card-img-top" alt="Kuroo Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Kuroo Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,000</h6>
+                    <p class="card-text"> Nekoma's scheming captain and middle blocker, Kuroo Tetsurou Nendoroid from Haikyuu!!</p>
+                    <button class="btn btn-primary" id="btnKuroo" onclick="addtoCart('Kuroo Nendoroid',2000)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20170630/6548/46212/large/d28fa1374fa495fa7944e2c93115f54c.jpg" class="card-img-top" alt="Ushijima Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Ushijima Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,050</h6>
+                    <p class="card-text"> Japan's Cannon and Shiratorizawa's captain and wing spiker, Ushijima Wakatoshi Nendoroid from Haikyuu!! </p>
+                    <button class="btn btn-primary" id="btnUshijima" onclick="addtoCart('Ushijima Nendoroid', 2050)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20141216/4780/31779/large/6230fad7f566b77d4255e5262d4228a7.jpg" class="card-img-top" alt="Kageyama Tobio Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Kageyama Tobio Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,000</h6>
+                    <p class="card-text"> The Original Version of The King of The Court, Kageyama Tobio Nendoroid from Haikyuu!! </p>
+                    <button class="btn btn-primary" id="btnKageyama" onclick="addtoCart('Kageyama Tobio Nendoroid', 2000)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+                  
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20210305/10898/81908/large/bf6205750c173ed54eaf4212c2a97507.jpg" class="card-img-top" alt="Kita Shinsuke Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Kita Shinsuke Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,100</h6>
+                    <p class="card-text"> The Captain of Inarizaki, Kita Shinsuke Nendoroid from Haikyuu!! </p>
+                    <button class="btn btn-primary" id="btnKita" onclick="addtoCart('Ushijima Nendoroid', 2100)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <h3>BUNGOU STRAY DOGS</h3>
+            <div class="row mb-5">
+                <div class="col-sm">
+                    <div class="card" style="width: 12rem">
+                        <img src="https://images.goodsmile.info/cgm/images/product/20230320/14133/113103/large/f4cac0e6bc0f6c5307cb7a94f7cc0683.jpg" class="card-img-top" alt="Dazai, Odasaku, and Ango Nendoroids (3-in-1 promo)">
+                        <div class="card-body">
+                        <h5 class="card-title">Dazai, Odasaku, and Ango Nendoroids (3-in-1)</h5>
+                        <h6 class="card-title">Price: Php 6,700</h6>
+                        <p class="card-text"> The Old Port Mafia Trio from Bungou Stray Dogs, Dazai Osamu, Oda Sakunosuke, and Sakaguchi Ango Nendoroids! </p>
+                        <button class="btn btn-primary" id="btnDaOdAn" onclick="addtoCart('Dazai, Odasaku, and Ango Nendoroids', 6700)">Add to Cart!</button>
+                        </div>
+                    </div>
+                    </div>
+            
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20160913/5948/41309/large/0bf6e1356a190c181ca43ed6c2ce3ddd.jpg" class="card-img-top" alt="Chuuya Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Chuuya Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,200</h6>
+                    <p class="card-text"> The gravity manipulator of Bungou Stray Dogs, Nakahara Chuuya Nendoroid! </p>
+                    <button class="btn btn-primary" id="btnChuuya" onclick="addtoCart('Chuuya Nendoroid', 2200)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20160720/5809/40132/large/9bc81920bc83a67eb30e3e58cec2a30c.jpg" class="card-img-top" alt="Dazai Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Dazai Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,200</h6>
+                    <p class="card-text"> The original Dazai Osamu Nendoroid from Bungou Stray Dogs!</p>
+                    <button class="btn btn-primary" id="btnDazai" onclick="addtoCart('Dazai Nendoroid', 2200)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>    
+                
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20180227/7085/50474/large/eb482c9f465dc7ae7b6b066e0eeb3692.jpg" class="card-img-top" alt="Nakajima Atsushi Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Nakajima Atsushi Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 1,900</h6>
+                    <p class="card-text"> Nakajima Atsushi Nendoroid from Bungou Stray Dogs! </p>
+                    <button class="btn btn-primary" id="btnAtsushi" onclick="addtoCart('Nakajima Atsushi Nendoroid', 1900)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20190809/8678/62788/large/3ce1d61f1bf43f060e94fe4bd5f63d5c.jpg" class="card-img-top" alt="Akutagawa Ryuunosuke Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Akutagawa Ryuunosuke Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,100</h6>
+                    <p class="card-text"> The original Akutagawa Ryuunosuke Nendoroid from Bungou Stray Dogs! </p>
+                    <button class="btn btn-primary" id="btnAku" onclick="addtoCart('Akutagawa Ryuunosuke Nendoroid', 2100)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20200714/9771/72154/large/8622a025484846d12c387219f0073309.jpg" class="card-img-top" alt="Dazai Nendoroid (Airport Ver.)">
+                    <div class="card-body">
+                    <h5 class="card-title">Dazai Nendoroid (Airport Ver.)</h5>
+                    <h6 class="card-title">Price: Php 2,500</h6>
+                    <p class="card-text"> The Airport Version of Dazai Osamu from Bungou Stray Dogs! </p>
+                    <button class="btn btn-primary" id="btnDazaiAir" onclick="addtoCart('Dazai Nendoroid (Airport Ver.)', 2500)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+             
+            <h3>BOKU NO HERO ACADEMIA</h3>
+            <div class="row mb-5">
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20210802/11597/88150/large/f2d3d59528a28c2447d66504236b7f5c.jpg" class="card-img-top" alt="Bakugou, Todoroki, and Midoriya Nendoroids (Winter Ver.) (3-in-1)">
+                    <div class="card-body">
+                    <h5 class="card-title">Bakugou, Todoroki, and Midoriya Nendoroids (Winter Ver.) (3-in-1)</h5>
+                    <h6 class="card-title">Price: Php 6,800</h6>
+                    <p class="card-text"> Winter versions of Bakugou Katsuki, Midoriya Izuku, and Todoroki Shouto from Boku no Hero Academia!</p>
+                    <button class="btn btn-primary" id="btnBaToMi" onclick="addtoCart('Bakugou, Todoroki, and Midoriya Nendoroids', 6800)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20190627/8475/61366/large/158db7a0648dd592cb7d141f49fd8f8e.jpg" class="card-img-top" alt="Shigaraki Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Shigaraki Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,300</h6>
+                    <p class="card-text"> The leader of the LOV from Boku no Hero Academia, Shigaraki Tomura! </p>
+                    <button class="btn btn-primary" id="btnShigaraki" onclick="addtoCart('Shigaraki Nendoroid', 2300)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                    <div class="card" style="width: 12rem">
+                        <img src="https://images.goodsmile.info/cgm/images/product/20200803/9893/72875/large/8b579f2d6747ef335eb28096773eeb42.jpg" class="card-img-top" alt="Dabi Nendoroid">
+                        <div class="card-body">
+                        <h5 class="card-title">Dabi Nendoroid</h5>
+                        <h6 class="card-title">Price: Php 2,600</h6>
+                        <p class="card-text"> Dabi Nendoroid from Boku no Hero Academia! </p>
+                        <button class="btn btn-primary" id="btnDabi" onclick="addtoCart('Dabi Nendoroid', 2600)">Add to Cart!</button>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-sm">
+                        <div class="card" style="width: 12rem">
+                            <img src="https://images.goodsmile.info/cgm/images/product/20230209/13951/111409/large/bf21d6051e4f5791d9716848eab3b4f8.jpg" class="card-img-top" alt="Hawks Nendoroid">
+                            <div class="card-body">
+                            <h5 class="card-title">Hawks Nendoroid</h5>
+                            <h6 class="card-title">Price: Php 2,800</h6>
+                            <p class="card-text"> The Number 2 Hero, Hawks Nendoroid from Boku no Hero Academia! </p>
+                            <button class="btn btn-primary" id="btnHawks" onclick="addtoCart('Hawks Nendoroid', 2800)">Add to Cart!</button>
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="col-sm">
+                        <div class="card" style="width: 12rem">
+                            <img src="https://images.goodsmile.info/cgm/images/product/20200311/9346/68257/large/dae0c6677ed718245966606788aaea2e.jpg" class="card-img-top" alt="Kirishima Eijirou Nendoroid">
+                            <div class="card-body">
+                            <h5 class="card-title">Kirishima Eijirou Nendoroid</h5>
+                            <h6 class="card-title">Price: Php 2,400</h6>
+                            <p class="card-text"> Kirishima Eijirou Nendoroid from Boku no Hero Academia! </p>
+                            <button class="btn btn-primary" id="btnKiri" onclick="addtoCart('Kirishima Eijirou Nendoroid', 2400)">Add to Cart!</button>
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="col-sm">
+                        <div class="card" style="width: 12rem">
+                            <img src="https://images.goodsmile.info/cgm/images/product/20200427/9459/69263/large/c521f483cf63d952e979b7b37ebf0dbd.jpg" class="card-img-top" alt="Toga Himiko Nendoroid">
+                            <div class="card-body">
+                            <h5 class="card-title">Toga Himiko Nendoroid</h5>
+                            <h6 class="card-title">Price: Php 2,500</h6>
+                            <p class="card-text"> Toga Himiko Nendoroid from Boku no Hero Academia! </p>
+                            <button class="btn btn-primary" id="btnToga" onclick="addtoCart('Toga Himiko Nendoroid', 2500)">Add to Cart!</button>
+                            </div>
+                        </div>
+                        </div>
+            </div>
+        
+            <h3>VIDEO GAMES</h3>
+            <div class="row mb-5">
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20181218/7916/56860/large/1e05d6380de30f1b823993a063e581ec.jpg" class="card-img-top" alt="Kirby Nendoroid (Yellow)">
+                    <div class="card-body">
+                    <h5 class="card-title">Yellow Kirby Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2000</h6>
+                    <p class="card-text"> A Yellow Version of the Kirby Nendoroid! </p>
+                    <button class="btn btn-primary" id="btnKirby" onclick="addtoCart('Yellow Kirby Nendoroid', 2000)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+        
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20220913/13244/104226/large/a3c4dba776886df8bacc7144cb01b70d.jpg" class="card-img-top" alt="King Dedede Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">King Dedede Nendoroid </h5>
+                    <h6 class="card-title">Price: Php 3,200</h6>
+                    <p class="card-text"> Nendoroid of King Dedede from the game Kirby! </p>
+                    <button class="btn btn-primary" id="btnDedede" onclick="addtoCart('King Dedede Nendoroid', 3200)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+        
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://special.goodsmile.info/symphony/images/img_top_white.png" class="card-img-top" alt="Miku Nendoroid - Symphony 5th Anniversary">
+                    <div class="card-body">
+                    <h5 class="card-title">Miku Nendoroid - Symphony 5th Anniv.</h5>
+                    <h6 class="card-title">Price: Php 3,500</h6>
+                    <p class="card-text"> A Special Edition Nendoroid to celebrate the 5th Anniversary of Hatsune Miku </p>
+                    <button class="btn btn-primary" id="btnMiku" onclick="addtoCart('Miku Nendoroid - Symphony 5th Anniv.', 3500)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20210727/11555/87738/large/72daeea50aa9a80e7ad0d4baad9328c2.jpg" class="card-img-top" alt="Hello Good Smile! Rin">
+                    <div class="card-body">
+                    <h5 class="card-title">Hello Good Smile! Rin</h5>
+                    <h6 class="card-title">Price: Php 700</h6>
+                    <p class="card-text"> A Hello Good Smile! of Kagamine Rin! </p>
+                    <button class="btn btn-primary" id="btnRin" onclick="addtoCart('Hello Good Smile! Rin Nendoroid', 700)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20160822/5882/40736/large/fa9ee7ff2773443fcbc59c751c50122c.jpg" class="card-img-top" alt="Meta Knight Nendoroid">
+                    <div class="card-body">
+                    <h5 class="card-title">Meta Knight Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,400</h6>
+                    <p class="card-text"> Meta Knight Nendoroid from the game Kirby!</p>
+                    <button class="btn btn-primary" id="btnMetaK" onclick="addtoCart('Meta Knight Nendoroid', 2400)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+    
+                <div class="col-sm">
+                <div class="card" style="width: 12rem">
+                    <img src="https://images.goodsmile.info/cgm/images/product/20140409/4370/28538/large/316cd2b12571f5b6e168782d4bb52914.jpg" class="card-img-top" alt="Himuro and Fuyutsuki Nendoroids (2-in-1)">
+                    <div class="card-body">
+                    <h5 class="card-title">Link (Wind Waker Ver.) Nendoroid</h5>
+                    <h6 class="card-title">Price: Php 2,000</h6>
+                    <p class="card-text"> Wind Waker Version of Link Nendoroid from 'The Legend of Zelda: The Wind Waker  </p>
+                    <button class="btn btn-primary" id="btnLink" onclick="addtoCart('Link (Wind Waker Ver.) Nendoroid', 2000)">Add to Cart!</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div> 
+            
+
+        <div id="form-area">
+
+            <div id="actualCart">
+            <ul id="shopCartItems">
+                <li id="empty" class="list-group-item"><i>There are no items in your cart.</i></li>
+            </ul>
+
+            <p id="totalPay">Total: Php 0.00</p>
+            </div>
+
+            <div id="form-container"> 
+            <div>
+                <form action="http://sirjm.infinityfreeapp.com/checkout.php" method="get"> 
+                <div class="mb-3">
+                    <label for="labelCustName" class="form-label">Customer Name: </label>
+                    <input type="text" class="form-control" name="cust_name" id="labelCustName" placeholder="Full Name"><br>  
+                </div>
+
+                <div class="mb-3">
+                    <label for="labelDeliAddress" class="form-label">Delivery Address: </label>
+                    <input type="text" class="form-control" name="cust_addr" id="labelDeliAddress" placeholder="Address"><br>  
+                </div>
+
+                <div class="mb-3">
+                    <label for="labelEmail" class="form-label">Email Address: </label>
+                    <input type="text" class="form-control" name="cust_email" id="labelEmail" placeholder="Email  Address">            
+                </div>
+
+                <input type="hidden" name="cust_order" id="cartOrder" class="form-control">
+
+                <input type="hidden" name="shopname" class="form-control" value="To be named">
+
+                <button class="btn btn-primary" value="Checkout">Submit Order!</button>
+                </form>
+            </div>
+            
+            </div>
+        </div>
+    </div>
+
+</body>
+</html> 
